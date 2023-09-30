@@ -49,6 +49,7 @@ class OrderController {
         }
 
         const foodId = order.order.map(el => Number(el.foodId))
+        const foodCount = order.order.map(el => Number(el.count))
 
         const food = await Food.findAll({
             where: {
@@ -58,7 +59,13 @@ class OrderController {
             }
         })
 
-        res.json(food)
+        const response = []
+
+        for (let i = 0; i < food.length; i++) {
+            response.push({foodId: food[i], foodCount: foodCount[i]})
+        }
+
+        res.json(response)
     }
 }
 
